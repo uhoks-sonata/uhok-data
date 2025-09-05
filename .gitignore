@@ -198,3 +198,4 @@ cython_debug/
 .env
 firebase_key.json
 logs_viewer.py
+test_main.py
