@@ -29,7 +29,7 @@ def create_fct_homeshopping(): # 홈쇼핑 관련 데이터 FCT TABLE 생성 함
     """
     create_detail = """
     CREATE TABLE IF NOT EXISTS FCT_HOMESHOPPING_DETAIL_INFO (
-        DETAIL_ID INT,
+        DETAIL_ID INT PRIMARY KEY,
         PRODUCT_ID BIGINT,
         DETAIL_COL VARCHAR(1000),
         DETAIL_VAL TEXT,

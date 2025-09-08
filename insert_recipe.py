@@ -7,25 +7,25 @@ import embedding.embedding as emb
 def create_rcp_table():
     create_ods_rcp = """
         CREATE TABLE IF NOT EXISTS ODS_RECIPE (
-            RCP_SNO INT PRIMARY KEY,
-            RCP_TTL VARCHAR(200),
-            CKG_NM VARCHAR(100),
-            RGTR_ID VARCHAR(100),
-            RGTR_NM VARCHAR(100),
-            INQ_CNT INT,
-            RCMM_CNT INT,
-            SRAP_CNT INT,
-            CKG_MTH_ACTO_NM VARCHAR(200),
-            CKG_STA_ACTO_NM VARCHAR(200),
-            CKG_MTRL_ACTO_NM VARCHAR(200),
-            CKG_KND_ACTO_NM VARCHAR(200),
-            CKG_IPDC TEXT,
-            CKG_MTRL_CN TEXT,
-            CKG_INBUN_NM VARCHAR(200),
-            CKG_DODF_NM VARCHAR(200),
-            CKG_TIME_NM VARCHAR(200),
-            FIRST_REG_DT VARCHAR(20),
-            RCP_IMG_URL TEXT
+            RCP_SNO	varchar(20)				PRIMARY KEY,
+            RCP_TTL	varchar(200)	NULL	DEFAULT	NULL,	
+            CKG_NM	varchar(40)	NULL	DEFAULT	NULL,	
+            RGTR_ID	varchar(32)	NULL	DEFAULT	NULL,	
+            RGTR_NM	varchar(64)	NULL	DEFAULT	NULL,	
+            INQ_CNT	varchar(20)	NULL	DEFAULT	NULL,	
+            RCMM_CNT	varchar(20)	NULL	DEFAULT	NULL,	
+            SRAP_CNT	varchar(20)	NULL	DEFAULT	NULL,	
+            CKG_MTH_ACTO_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_STA_ACTO_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_MTRL_ACTO_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_KND_ACTO_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_IPDC	text	NULL	DEFAULT	NULL,	
+            CKG_MTRL_CN	text	NULL	DEFAULT	NULL,	
+            CKG_INBUN_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_DODF_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            CKG_TIME_NM	varchar(100)	NULL	DEFAULT	NULL,	
+            FIRST_REG_DT	varchar(20)	NULL	DEFAULT	NULL,	
+            RCP_IMG_URL	text	NULL	DEFAULT	NULL	
     );
     """
     create_fct_rcp = """
