@@ -281,18 +281,18 @@ def prep_homeshop_info():
 def main(): # 홈쇼핑 데이터 전처리 및 FCT TABLE 적재 통합 코드
     conn_s, cur_s = utils.con_to_maria_service()
     prep_homeshop_info()
-    print('🟣 [HS] insert to info table')
+    print('🟣 [HS] insert into info table')
     prep_homeshop_list()
-    print('🟣 [HS] insert to list table')
+    print('🟣 [HS] insert into list table')
     prep_homeshop_prd()
-    print('🟣 [HS] insert to product table')
+    print('🟣 [HS] insert into product table')
     prep_homeshop_dtl()
-    print('🟣 [HS] insert to detail table')
+    print('🟣 [HS] insert into detail table')
     prep_homeshop_img()
-    print('🟣 [HS] insert to image table')
+    print('🟣 [HS] insert into image table')
     # 편성표 변경 대응 필터 테이블
     prep_cur_schedule()
-    print('🟣 [HS] insert to cur schedule table')
+    print('🟣 [HS] insert into cur schedule table')
     # 홈앤쇼핑 중복 이미지 url 삭제
     cur_s.execute('''
         DELETE FROM FCT_HOMESHOPPING_IMG_URL

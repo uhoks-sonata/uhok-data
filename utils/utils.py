@@ -33,6 +33,9 @@ def con_to_maria_service():
         config = parse_dsn(os.getenv("MARIADB_SERVICE_URL"))
         conn = mariadb.connect(**config, autocommit=True)
         cur = conn.cursor()
+        cur.execute("SET NAMES utf8mb4")
+        cur.execute("SET character_set_results = 'utf8mb4'")
+        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
         return conn, cur
     except mariadb.Error as e:
         print(f"Error connecting to MariaDB SERVICE_DB: {e}")
@@ -43,9 +46,25 @@ def con_to_maria_ods():
         config = parse_dsn(os.getenv("MARIADB_ODS_URL"))
         conn = mariadb.connect(**config, autocommit=True)
         cur = conn.cursor()
+        cur.execute("SET NAMES utf8mb4")
+        cur.execute("SET character_set_results = 'utf8mb4'")
+        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
         return conn, cur
     except mariadb.Error as e:
         print(f"Error connecting to MariaDB ODS_DB: {e}")
+        sys.exit(1)
+
+def con_to_maria_auth():
+    try:
+        config = parse_dsn(os.getenv("MARIADB_AUTH_URL"))
+        conn = mariadb.connect(**config, autocommit=True)
+        cur = conn.cursor()
+        cur.execute("SET NAMES utf8mb4")
+        cur.execute("SET character_set_results = 'utf8mb4'")
+        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
+        return conn, cur
+    except mariadb.Error as e:
+        print(f"Error connecting to MariaDB AUTH_DB: {e}")
         sys.exit(1)
 
 def con_to_psql(db_name):
@@ -271,3 +290,40 @@ def data_counting():
 def print_cnt( col_list : list, list1 : list, list2 : list):
     for i in range(len(col_list)):
         print(f"  📋 {col_list[i]} | CHANGE : {list1[i]} ➡  {list2[i]} | DIFF : {list2[i] - list1[i]}")
+
+def deal_with_corruption():
+    conn_o, cur_o = con_to_maria_ods()
+    conn_s, cur_s = con_to_maria_service()
+    conn_a, cur_a = con_to_maria_auth()
+
+    cur_list = [cur_o,cur_s,cur_a]
+
+    for cur in cur_list:
+        cur.execute('''SHOW TABLES;''')
+        rows = cur.fetchall()
+        table_list = [row[0] for row in rows]
+        for table in table_list:
+            new_table = f'{table}_NEW'
+            # try:
+            #     cur.execute(f"""CREATE TABLE IF NOT EXISTS {new_table} LIKE {table}""")
+            #     print(f'create table {new_table}')
+            # except Exception as e:
+            #     print(f"[ERROR IN CREAT]: {e}")
+
+            # try:
+            #     cur.execute(f"""
+            #         INSERT IGNORE INTO {new_table} SELECT * FROM {table}""")
+            # except Exception as e:
+            #     print(f"[ERROR IN INSERT]: {e}")
+
+            try:
+                cur.execute(f"""RENAME TABLE `{table}` TO `{table}_OLD`,
+                                `{new_table}` TO `{table}`""")
+            except Exception as e:
+                print(f"[ERROR IN RENAME]: {e}")
+    cur_o.close()
+    cur_s.close()
+    cur_a.close()
+    conn_o.close()
+    conn_s.close()
+    conn_a.close()
