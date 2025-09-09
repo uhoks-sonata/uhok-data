@@ -199,3 +199,4 @@ cython_debug/
 firebase_key.json
 logs_viewer.py
 test_main.py
+deal_with_corruption.py
