@@ -245,12 +245,12 @@ def run(food_model: str, food_art_dir: str, ing_model: str, table: str, batch_si
             texts = df["PRODUCT_NAME"].astype(str).map(normalize).tolist()
             y_pred, conf = food_predict(texts)  # 1=식품, 0=비식품
             pairs = [(int(y_pred[i]), int(df.iloc[i]["PRODUCT_ID"])) for i in range(len(df))]
-            print(f"[FOOD] batch {len(df)} rows → set CLS_FOOD (1/0) | sample head:", pairs[:5])
+            print(f"[HS] [FOOD] batch {len(df)} rows → set CLS_FOOD")
             if not dry_run:
                 update_many_numeric(cur, table, "CLS_FOOD", pairs, id_col="PRODUCT_ID")
                 conn.commit()
             total_food_upd += len(pairs)
-        print(f"[FOOD] 총 업데이트: {total_food_upd} 행")
+        print(f"[HS] [FOOD] 총 업데이트: {total_food_upd} 행")
 
         # 3) CLS_FOOD=1 AND CLS_ING NULL → 예측/업데이트
         total_ing_upd = 0
@@ -267,12 +267,12 @@ def run(food_model: str, food_art_dir: str, ing_model: str, table: str, batch_si
             texts = df["PRODUCT_NAME"].astype(str).map(normalize).tolist()
             y_pred, conf = ing_predict(texts)   # 1=식재료, 0=완제품
             pairs = [(int(y_pred[i]), int(df.iloc[i]["PRODUCT_ID"])) for i in range(len(df))]
-            print(f"[ING] batch {len(df)} rows → set CLS_ING (1=식재료/0=완제품) | sample head:", pairs[:5])
+            print(f"[HS] [ING] batch {len(df)} rows → set CLS_ING")
             if not dry_run:
                 update_many_numeric(cur, table, "CLS_ING", pairs, id_col="PRODUCT_ID")
                 conn.commit()
             total_ing_upd += len(pairs)
-        print(f"[ING] 총 업데이트: {total_ing_upd} 행")
+        print(f"[HS] [ING] 총 업데이트: {total_ing_upd} 행")
 
     finally:
         cur.close()

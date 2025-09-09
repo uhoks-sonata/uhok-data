@@ -699,7 +699,7 @@ def crawl_hns_detail(
     flush_count = 0
 
     for product_id in id_list:
-        print('[HNS-DETAIL]',product_id, "collecting")
+        print('[HNS-DETAIL]',product_id, "수집")
         url = f"https://www.hnsmall.com/display/goods.do?goods_code={product_id}"
 
         try:
@@ -1035,7 +1035,7 @@ def crawl_hyundai_detail(homeshopping_id):
     count = 0
     total_cnt = 0
     for i in id_list:
-        print('[HYUNDAI-DETAIL]', i, 'collecting')
+        print('[HYUNDAI-DETAIL]', i, '수집')
         url = f"https://www.hmall.com/md/pda/itemPtc?slitmCd={i}"
         # 크롤링 / 빈 데이터 프레임에 concat
         df_product_info, df_img_url, df_detail_info = parse_hmall_product(url, homeshopping_id)
@@ -1395,7 +1395,7 @@ def crawl_ns_detail(homeshopping_id):
     count = 0
     total_cnt = 0
     for i in id_list:
-        print('[NS-DETAIL] ',i, 'collecting')
+        print('[NS-DETAIL] ',i, '수집')
         url = f'https://m.nsmall.com/goods/{i}'
         soup_init, soup_img, soup_detail = get_ns_html_to_soup(url)
 

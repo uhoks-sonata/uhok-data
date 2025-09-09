@@ -136,14 +136,14 @@ def run(model_path: str, table: str, batch_size: int, dry_run: bool):
             y_int = to_int_labels(pred)
 
             pairs = [(int(y_int[i]), int(df.iloc[i]["PRODUCT_ID"])) for i in range(len(df))]
-            print(f"[KOK] batch {len(df)} rows → set CLS_ING (1=식재료/0=완제품) | sample:", pairs[:5])
+            print(f"[KOK] [ING] batch {len(df)} rows → set CLS_ING")
 
             if not dry_run:
                 update_many_numeric(cur, table, "CLS_ING", pairs, id_col="PRODUCT_ID")
                 conn.commit()
             total_upd += len(pairs)
 
-        print(f"[KOK] 총 업데이트: {total_upd} 행")
+        print(f"[KOK] [ING] 총 업데이트: {total_upd} 행")
     finally:
         cur.close()
         conn.close()
