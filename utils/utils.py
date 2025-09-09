@@ -291,6 +291,7 @@ def print_cnt( col_list : list, list1 : list, list2 : list):
     for i in range(len(col_list)):
         print(f"  📋 {col_list[i]} | CHANGE : {list1[i]} ➡  {list2[i]} | DIFF : {list2[i] - list1[i]}")
 
+# 테이블 수리 함수
 def deal_with_corruption():
     conn_o, cur_o = con_to_maria_ods()
     conn_s, cur_s = con_to_maria_service()
