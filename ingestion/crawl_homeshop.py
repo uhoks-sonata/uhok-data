@@ -44,7 +44,7 @@ def create_ods_hs():
             `THUMB_IMG_URL` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
             `CREATED_AT` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
             PRIMARY KEY (`LIVE_ID`) USING BTREE,
-            UNIQUE INDEX `UNIQ_PROD_COL` (`HOMESHOPPING_ID`, `LIVE_DATE`, `LIVE_TIME`, `PRODUCT_ID`) USING BTREE
+            UNIQUE INDEX `UNIQ_PROD_COL` (`HOMESHOPPING_ID`, `LIVE_DATE`, `LIVE_TIME`, `PROMOTION_TYPE`, `PRODUCT_ID`) USING BTREE
         )
         COLLATE='utf8mb4_general_ci'
         ENGINE=InnoDB
