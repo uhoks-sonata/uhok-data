@@ -4,8 +4,8 @@ import pandas as pd
 import os
 import time
 from playwright.sync_api import sync_playwright
-import utils.utils as utils
-import preprocessing.preprocessing_kok as prkok
+import ETL.utils.utils as utils
+import ETL.preprocessing.preprocessing_kok as prkok
 import random
 
 def create_tables_ods_kok():

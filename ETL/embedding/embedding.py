@@ -1,7 +1,7 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import pandas as pd
-import utils.utils as utils
+import ETL.utils.utils as utils
 
 def create_vec_table():
     cr_rcp_vec_query = """

@@ -1,5 +1,4 @@
-import mariadb
-import utils.utils as utils
+import ETL.utils.utils as utils
 
 # classify 테이블 생성
 def create_cls_tables():

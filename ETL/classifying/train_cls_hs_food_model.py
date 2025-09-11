@@ -1,5 +1,4 @@
-import mariadb
-import utils.utils as utils
+import ETL.utils.utils as utils
 import re, json, joblib, argparse, numpy as np, pandas as pd
 from scipy.sparse import hstack, csr_matrix, issparse
 from sklearn.feature_extraction.text import TfidfVectorizer

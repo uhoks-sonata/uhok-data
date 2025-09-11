@@ -20,7 +20,7 @@ from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 import joblib
-import utils.utils as utils
+import ETL.utils.utils as utils
 
 # --------------------- 키워드 ---------------------
 finished_product_keywords = [

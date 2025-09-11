@@ -200,3 +200,13 @@ firebase_key.json
 logs_viewer.py
 test_main.py
 deal_with_corruption.py
+config/
+config
+logs/
+logs
+plugins/
+plugins
+dags/
+docker-compose.yaml
+Dockerfile
+requirements_docker.txt

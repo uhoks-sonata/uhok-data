@@ -31,7 +31,7 @@ def main():
     # 1) HS 예측 (FOOD → ING)
     if not args.skip_hs:
         cmd = [
-            py, "-m", "classifying.predict_hs",
+            py, "-m", "ETL.classifying.predict_hs",
             "--table", args.hs_table,
             "--food-art-dir", str(art),
             "--ing-model", str(hs_ing_joblib),
@@ -44,7 +44,7 @@ def main():
     # 2) KOK 예측 (ING)
     if not args.skip_kok:
         cmd = [
-            py, "-m", "classifying.predict_kok",
+            py, "-m", "ETL.classifying.predict_kok",
             "--table", args.kok_table,
             "--model", str(kok_joblib),
             "--batch-size", str(args.batch_size),

@@ -1,6 +1,5 @@
-import mariadb
 import sys
-import utils.utils as utils
+import ETL.utils.utils as utils
 import pandas as pd
 import numpy as np
 
@@ -321,7 +320,7 @@ def preprocess_kok(): # PREPROCESSING ODS TABLES / INSERT TO FCT TABLES
                 SELECT KOK_PRODUCT_ID FROM FCT_KOK_PRODUCT_INFO);
                       ''')
         print('⭕ [KOK] 무결성 확보')
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"❌ MariaDB 오류: {e}")
         sys.exit(1)
     finally:

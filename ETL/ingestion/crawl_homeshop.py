@@ -5,7 +5,7 @@ import json
 import re
 import numpy as np
 import pandas as pd
-import utils.utils as utils
+import ETL.utils.utils as utils
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
 from datetime import date, timedelta, datetime, timezone

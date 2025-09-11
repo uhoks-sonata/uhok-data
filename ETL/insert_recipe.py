@@ -1,7 +1,7 @@
 import pandas as pd
-import utils.utils as utils
+import ETL.utils.utils as utils
 import re
-import embedding.embedding as emb
+import ETL.embedding.embedding as emb
 
 # 레시피 관련 테이블 생성 (ODS, SERVICE)
 def create_rcp_table():
@@ -73,7 +73,7 @@ def create_rcp_table():
 # 만개의 레시피 raw data 적재 (ODS_RECIPE)
 def insert_rawdata():
     # CSV 파일 로드
-    df = pd.read_csv('./__data/TB_RECIPE_SEARCH_241226.csv', encoding='utf-8')
+    df = pd.read_csv('./ETL/__data/TB_RECIPE_SEARCH_241226.csv', encoding='utf-8')
     # mariaDB 연결
     conn, cur = utils.con_to_maria_ods()
     # 데이터 삽입 쿼리 (19개 컬럼)
@@ -306,13 +306,45 @@ def insert_tst_mtrl():
     conn_s.close()
 
 def main():
-    create_rcp_table()
-    insert_rawdata()
-    preprocess_rcp()
-    preprocess_mtrl()
-    insert_tst_mtrl()
-    emb.rcp_embed()
-    emb.mtrl_embed()
+    try:
+        conn_o, cur_o = utils.con_to_maria_ods()
+        cur_o.execute("""SELECT COUNT(*) FROM ODS_RECIPE""")
+        cnt = cur_o.fetchall()[0][0]
+        if cnt > 0:
+            print('📌 [RECIPE] 레시피 데이터 확인. 종료')
+            pass
+        else:
+            print('📌 [RECIPE] 레시피 데이터 ETL 시작')
+            create_rcp_table()
+            insert_rawdata()
+            print('🆗 [RECIPE] 레시피 데이터 삽입 완료')
+            preprocess_rcp()
+            preprocess_mtrl()
+            print('🆗 [RECIPE] 레시피 데이터 전처리 완료')
+            insert_tst_mtrl()
+            emb.rcp_embed()
+            emb.mtrl_embed()
+            print('🆗 [RECIPE] 레시피 데이터 임베딩 완료')
+    except:
+        try:
+            print('📌 [RECIPE] 레시피 데이터 ETL 시작')
+            create_rcp_table()
+            insert_rawdata()
+            print('🆗 [RECIPE] 레시피 데이터 삽입 완료')
+            preprocess_rcp()
+            preprocess_mtrl()
+            print('🆗 [RECIPE] 레시피 데이터 전처리 완료')
+            insert_tst_mtrl()
+            emb.rcp_embed()
+            emb.mtrl_embed()
+            print('🆗 [RECIPE] 레시피 데이터 임베딩 완료')
+        except Exception as e:
+            print('❌ [RECIPE] [ERROR] 에러메시지 :')
+            print(e)
+            pass
+    finally:
+        cur_o.close()
+        conn_o.close()
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 import pandas as pd
-import utils.utils as utils
+import ETL.utils.utils as utils
 import time
 def create_fct_homeshopping(): # 홈쇼핑 관련 데이터 FCT TABLE 생성 함수
     conn, cur_s = utils.con_to_maria_service()

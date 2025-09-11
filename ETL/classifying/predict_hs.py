@@ -5,7 +5,7 @@ import pandas as pd
 from typing import List, Tuple, Any, Dict, Optional, Callable
 from scipy.sparse import hstack, csr_matrix
 from sklearn.base import BaseEstimator, TransformerMixin
-import utils.utils as utils
+import ETL.utils.utils as utils
 # 학습 때 사용한 키워드 
 finished_product_keywords = [
     "라면","컵라면","즉석밥","도시락","김밥","피자","햄버거","샌드위치",

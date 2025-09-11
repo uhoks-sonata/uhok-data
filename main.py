@@ -1,17 +1,17 @@
-import ingestion.crawl_homeshop as cr_hs
-import ingestion.crawl_kok as cr_k
-import preprocessing.preprocessing_hs as pr_hs
-import preprocessing.preprocessing_kok as pr_k
-import embedding.embedding as emb
-import utils.utils as utils
+import ETL.ingestion.crawl_homeshop as cr_hs
+import ETL.ingestion.crawl_kok as cr_k
+import ETL.preprocessing.preprocessing_hs as pr_hs
+import ETL.preprocessing.preprocessing_kok as pr_k
+import ETL.embedding.embedding as emb
+import ETL.utils.utils as utils
 from concurrent.futures import ProcessPoolExecutor, wait, ALL_COMPLETED
 import multiprocessing
 import traceback
 import os
 import sys
-from classifying import fct_to_cls, predict_main
+from ETL.classifying import fct_to_cls, predict_main
 import time
-
+import ETL.insert_recipe as insert_recipe
 # ODS -> FCT -> VEC 테이블 생성
 def create_tables():
     conn_o, cur_o = utils.con_to_maria_ods()
@@ -156,7 +156,7 @@ def pred_all():
         print('Error in [ pred_all ]', traceback.format_exc())    
 
 # 함수 병렬 실행
-MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "4"))
+MAX_WORKERS = int(os.environ.get("MAX_WORKERS", "2"))
 
 def _safe_submit(ex, fn, name):
     """작업 제출 + 이름 출력용 헬퍼."""
@@ -188,14 +188,17 @@ def main():
         # 독립 크롤링 4개 제출
         cr_start = time.time()
 
-        f_cr_kok = _safe_submit(ex, cr_kok, "cr_kok")
-        f_cr_hns = _safe_submit(ex, cr_hns, "cr_hns")
-        f_cr_hd  = _safe_submit(ex, cr_hd,  "cr_hd")
         f_cr_ns  = _safe_submit(ex, cr_ns,  "cr_ns")
+        f_cr_hd  = _safe_submit(ex, cr_hd,  "cr_hd")
 
         # 3) KOK 체인: cr_kok → pr_kok → emb_kok
         # cr_kok 완료 기다린 뒤 다음 단계 제출
-        wait([f_cr_kok, f_cr_hns, f_cr_hd, f_cr_ns], return_when=ALL_COMPLETED)
+        wait([f_cr_hd, f_cr_ns], return_when=ALL_COMPLETED)
+
+        f_cr_kok = _safe_submit(ex, cr_kok, "cr_kok")
+        f_cr_hns = _safe_submit(ex, cr_hns, "cr_hns")
+
+        wait([f_cr_kok, f_cr_hns], return_when=ALL_COMPLETED)
 
         cr_end = time.time()
         cr_process_time = f'{cr_end - cr_start:.4f}'
@@ -260,4 +263,5 @@ def main():
     utils.print_cnt(cls_cnt, cls_cnt1, cls_cnt2)
 
 if __name__ == "__main__":
+    insert_recipe.main()
     main()

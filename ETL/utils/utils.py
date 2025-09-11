@@ -1,4 +1,4 @@
-import mariadb
+import pymysql
 import psycopg2
 import sys
 import os
@@ -30,40 +30,71 @@ def parse_dsn(dsn):
 
 def con_to_maria_service():
     try:
-        config = parse_dsn(os.getenv("MARIADB_SERVICE_URL"))
-        conn = mariadb.connect(**config, autocommit=True)
+        # 예: mysql+pymysql://user:pass@192.168.101.55:3306/SERVICE_DB
+        dsn = os.getenv("MARIADB_SERVICE_URL")
+        config = parse_dsn(dsn)  # host, port, user, password, database 를 반환해야 함
+
+        conn = pymysql.connect(
+            host=config["host"],
+            port=int(config.get("port", 3306)),
+            user=config["user"],
+            password=config.get("password", ""),
+            database=config.get("database", ""),
+            charset="utf8mb4",
+            autocommit=True,
+        )
         cur = conn.cursor()
-        cur.execute("SET NAMES utf8mb4")
-        cur.execute("SET character_set_results = 'utf8mb4'")
-        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
+        # 문자셋/콜레이션 고정 (원 코드와 동일한 효과)
+        cur.execute("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci")
         return conn, cur
-    except mariadb.Error as e:
+
+    except pymysql.MySQLError as e:
         print(f"Error connecting to MariaDB SERVICE_DB: {e}")
         sys.exit(1)
 
 def con_to_maria_ods():
     try:
-        config = parse_dsn(os.getenv("MARIADB_ODS_URL"))
-        conn = mariadb.connect(**config, autocommit=True)
+        dsn = os.getenv("MARIADB_ODS_URL")
+        config = parse_dsn(dsn)
+
+        conn = pymysql.connect(
+            host=config["host"],
+            port=int(config.get("port", 3306)),
+            user=config["user"],
+            password=config.get("password", ""),
+            database=config.get("database", ""),
+            charset="utf8mb4",
+            autocommit=True,
+        )
         cur = conn.cursor()
-        cur.execute("SET NAMES utf8mb4")
-        cur.execute("SET character_set_results = 'utf8mb4'")
-        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
+        cur.execute("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci")
         return conn, cur
-    except mariadb.Error as e:
+
+    except pymysql.MySQLError as e:
         print(f"Error connecting to MariaDB ODS_DB: {e}")
         sys.exit(1)
 
 def con_to_maria_auth():
     try:
-        config = parse_dsn(os.getenv("MARIADB_AUTH_URL"))
-        conn = mariadb.connect(**config, autocommit=True)
+        # 예: mysql+pymysql://user:pass@192.168.101.55:3306/SERVICE_DB
+        dsn = os.getenv("MARIADB_AUTH_URL")
+        config = parse_dsn(dsn)
+
+        conn = pymysql.connect(
+            host=config["host"],
+            port=int(config.get("port", 3306)),
+            user=config["user"],
+            password=config.get("password", ""),
+            database=config.get("database", ""),
+            charset="utf8mb4",
+            autocommit=True,
+        )
         cur = conn.cursor()
-        cur.execute("SET NAMES utf8mb4")
-        cur.execute("SET character_set_results = 'utf8mb4'")
-        cur.execute("SET collation_connection = 'utf8mb4_unicode_ci'")
+        # 문자셋/콜레이션 고정 (원 코드와 동일한 효과)
+        cur.execute("SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci")
         return conn, cur
-    except mariadb.Error as e:
+
+    except pymysql.MySQLError as e:
         print(f"Error connecting to MariaDB AUTH_DB: {e}")
         sys.exit(1)
 
@@ -93,7 +124,7 @@ def insert_df_into_db(conn, df, table_name: str, IGNORE = ""):
     if conn.__class__.__module__.startswith("psycopg2"):
         columns_sql = '"' + '", "'.join(map(str, col_list)) + '"'
         query = f'"{table_name}" ({columns_sql}) VALUES ({placeholders})'
-    elif conn.__class__.__module__.startswith("mariadb"):
+    else:
         columns_sql = ','.join(map(str, col_list))
         query = f'{table_name} ({columns_sql}) VALUES ({placeholders})'
 
