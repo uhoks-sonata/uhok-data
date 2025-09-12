@@ -35,17 +35,15 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 ### Extract
 --
 
-#### Transform
+### Transform
 
 
-#### Load
+### Load
 
 
 #### 폴더 구조
 ```
 uhok-data/
-├── __init__.py
-│
 ├── ETL/                                   # ETL 파이프라인 Python 패키지                   
 │   ├── __init__.py 
 │   │                              
@@ -141,7 +139,7 @@ uhok-data/
 ### 사전 요구사항
 - Python 
   + 로컬 : Python 3.13.5
-  + Airflow : Python 3.12.12
+  + Airflow : Python 3.12.12 (자동 설치)
 - Docker & Docker Compose
 - MariaDB
 - PostgreSQL (pgvector 확장)
@@ -159,7 +157,13 @@ cd uhok-data
 
 
 3. **유저 생성 및 권한 부여**
+```sql
+-- 생성예시
+CREATE USER 'user'@'%' IDENTIFIED BY 'password';
 
+-- 권한부여
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
+```
 
 
 4. **환경 변수 설정**
