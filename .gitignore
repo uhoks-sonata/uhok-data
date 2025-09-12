@@ -201,3 +201,5 @@ logs_viewer.py
 test_main.py
 deal_with_corruption.py
 logs/*
+ETL/__data/test/
+ETL/__data/test

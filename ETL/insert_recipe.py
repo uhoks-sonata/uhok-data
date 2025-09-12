@@ -73,7 +73,7 @@ def create_rcp_table():
 # 만개의 레시피 raw data 적재 (ODS_RECIPE)
 def insert_rawdata():
     # CSV 파일 로드
-    df = pd.read_csv('./ETL/__data/TB_RECIPE_SEARCH_241226.csv', encoding='utf-8')
+    df = pd.read_csv('./ETL/data/TB_RECIPE_SEARCH_241226.csv', encoding='utf-8')
     # mariaDB 연결
     conn, cur = utils.con_to_maria_ods()
     # 데이터 삽입 쿼리 (19개 컬럼)
