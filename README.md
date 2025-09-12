@@ -32,7 +32,7 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
   <img src="https://img.shields.io/badge/PostgerSQL-a9abe4?style=flat&logo=PostgreSQL&logoColor=black"/>
 - **DB 연결**\
   <img src="https://img.shields.io/badge/Pymysql-fc7773?style=flat&logo=Python&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Psycopg-Binary-ef9c89?style=flat&logo=Python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Psycopg-ef9c89?style=flat&logo=Python&logoColor=white"/>
 - **컨테이너**\
   <img src="https://img.shields.io/badge/Docker-001b1e?style=flat&logo=Docker&logoColor=blue"/>
 - **오케스트레이션**\
@@ -128,28 +128,23 @@ uhok-data/
 
 ---
 ### ERD
-#### MariaDB
-- **AUTH_DB** - `Back-End`
+- **AUTH_DB** - `MariaDB`
 
 <img src="documents/images/auth.PNG">
 
-- **ODS_DB** - `Data-Engineer`
+- **ODS_DB** - `MariaDB`
 
 <img src="documents/images/ods.PNG">
 
-- **SERVICE_DB** - `Data-Engineer`, `Back-End`
+- **SERVICE_DB** - `MariaDB`
 
 <img src="documents/images/service.PNG">
 
----
-
-#### PostgreSQL
-
-- **REC_DB** - `Data-Engineer`, `ML-Engineer`
+- **REC_DB** - `PostgreSQL`
 
 <img src="documents/images/rec.PNG">
 
-- **LOG_DB** - `Back-End`
+- **LOG_DB** - `PostgreSQL`
 
 <img src="documents/images/log.PNG">
 
