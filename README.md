@@ -194,6 +194,7 @@ $ source .venv/Scripts/activate
 $ uv pip install -r requirements.txt
 ```
 
+
 6. **레시피 데이터 ETL 로직 실행**
 ```bash
 # 레시피 데이터 ETL 최초 1회 실행
