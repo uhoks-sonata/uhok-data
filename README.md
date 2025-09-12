@@ -1,7 +1,6 @@
 # UHOK Data
 
-U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.
-
+U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.\
 Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 구축합니다.
 
 ## 📑 수집 데이터
@@ -33,8 +32,8 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 
 <img src="documents/images/ETL_pipeline.png">
 
-#### Extract
----
+### Extract
+--
 
 #### Transform
 
@@ -110,8 +109,7 @@ uhok-data/
 [ODS_DB](documents/Table_def_ODS_DB.pdf)\
 [SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)\
 [REC_DB](documents/Table_def_REC_DB.pdf)\
-[LOG_DB](documents/Table_def_LOG_DB.pdf)\
-
+[LOG_DB](documents/Table_def_LOG_DB.pdf)
 
 ### ERD
 
