@@ -174,7 +174,7 @@ cd uhok-data
   CREATE DATABASE ODS_DB
   CREATE DATABASE SERVICE_DB
   ```
-   \
+
   + PostgreSQL
   ```sql
   -- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
