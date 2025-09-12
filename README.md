@@ -21,8 +21,8 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 ## 🏗️ 아키텍처
 
 ### 🛠 기술 스택
-- **개발 언어**
-  <img src="https://img.shields.io/badge/TEXT-COLOR?style=flat&logo=LOGO&logoColor=white"/>
+- **개발 언어**\
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=LOGO&logoColor=white"/>
 - **크롤링**: Requests, BeautifulSoup4, Playwright chromium / chromium-headless-shell
 - **데이터베이스**: MariaDB, PostgerSQL (Ubuntu)
 - **DB 연결**: Pymysql, psycopg-binary
