@@ -20,7 +20,7 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 
 ## 🏗️ 아키텍처
 
-### 기술 스택
+### 🛠 기술 스택
 - **크롤링**: Requests, BeautifulSoup4, Playwright (chromium)
 - **데이터베이스**: MariaDB, PostgerSQL (Ubuntu)
 - **DB 연결**: Pymysql, psycopg-binary
@@ -39,6 +39,9 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 
 
 ### 데이터 전처리 및 임베딩
+
+
+### DAG
 
 
 ### 폴더 구조
@@ -108,10 +111,9 @@ uhok-data/
 [SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)\
 [REC_DB](documents/Table_def_REC_DB.pdf)\
 [LOG_DB](documents/Table_def_LOG_DB.pdf)
-
+---
 ### ERD
-- - -
-### MariaDB
+#### MariaDB
 - **AUTH_DB** - `Back-End`
 
 <img src="documents/images/auth.PNG">
@@ -124,7 +126,8 @@ uhok-data/
 
 <img src="documents/images/service.PNG">
 
-### PostgreSQL
+---
+#### PostgreSQL
 
 - **REC_DB** - `Data-Engineer`, `ML-Engineer`
 
@@ -133,7 +136,8 @@ uhok-data/
 - **LOG_DB** - `Back-End`
 
 <img src="documents/images/log.PNG">
-- - -
+
+---
 
 ## 🚀 빠른 시작
 
@@ -143,21 +147,31 @@ uhok-data/
   + Airflow : Python 3.12.12 (자동 설치)
 - Docker Desktop
 - MariaDB
-- PostgreSQL (pgvector 확장)
+- PostgreSQL
 
 ### 환경 설정
 
-1. **저장소 클론**
+**1. 저장소 클론**
 ```bash
 git clone <repository-url>
 cd uhok-data
 ```
 
-2. **로컬 DB 구축**
+**2. 로컬 DB 구축**
+  + MariaDB
+  ```sql
+  CREATE DATABASE ODS_DB
+  CREATE DATABASE SERVICE_DB
+  ```
+   \
+  + PostgreSQL
+  ```sql
+  -- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
 
+  CREATE DATABASE "REC_DB"
+  ```
 
-
-3. **유저 생성 및 권한 부여**
+**3. 유저 생성 및 권한 부여**
 ```sql
 -- 생성예시
 CREATE USER 'user'@'%' IDENTIFIED BY 'password';
@@ -167,47 +181,49 @@ GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
 ```
 
 
-4. **환경 변수 설정**
+**4. 환경 변수 설정**
 ```bash
-# .env 파일 생성
+### .env 파일 생성
 cp .env.example .env
 
-# ----------- MariaDB -------------- 
+### ----------- MariaDB -------------- 
 MARIADB_ODS_URL="mysql+pymysql://user:password@localhost:3306/AUTH_DB"
 
-# 서비스용 DB (service_db)
+### 서비스용 DB (service_db)
 MARIADB_SERVICE_URL="mysql+asyncmy://user:password@localhost:3306/SERVICE_DB"
 
-# ----------- PostgreSQL -----------
+### ----------- PostgreSQL -----------
 POSTGRES_URL="postgresql://user:password@localhost:5432/"
 
-# ----------- Airflow --------------
+### ----------- Airflow --------------
 AIRFLOW_UID=50000
 ```
 
-5. **로컬 가상환경 설정**
+**5. 로컬 가상환경 설정**
 ```bash
 $ uv venv --python 3.13.5
 $ source .venv/Scripts/activate
 
-# requirements.txt > torch cpu버전 정의 주석처리 이후 pip install
+### requirements.txt > torch cpu버전 정의 주석처리 이후 pip install
 $ uv pip install -r requirements.txt
+
+### uv python 라이브러리 설치 이후 url, torch 부분 주석 해제
 ```
 
 
-6. **레시피 데이터 ETL 로직 실행**
+**6. 레시피 데이터 ETL 로직 실행**
 ```bash
-# 레시피 데이터 ETL 최초 1회 실행
+### 레시피 데이터 ETL 최초 1회 실행
 $ python -m ETL.insert_recipe
 ```
 
-7. **도커 빌드 & 업**
+**7. 도커 빌드 & 업**
 ```bash
 $ docker compose build
 $ docker compose up -d
 ```
 
-8. **Airflow DAG Trigger 실행**
+**8. Airflow DAG Trigger 실행**
   + 기본 PORT : 8080
   + 기본 ID/PW : `airflow` / `airflow`
   + DAG > uhok_pipeline > Trigger
