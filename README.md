@@ -1,7 +1,8 @@
 # UHOK Data
 
-U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다. 
-Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 제공합니다. 
+U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.
+
+Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 구축합니다.
 
 ## 📑 수집 데이터
 
@@ -21,7 +22,7 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 ## 🏗️ 아키텍처
 
 ### 기술 스택
-- **크롤링**: Requests, BeutifulSoup4, Playwright (chromium)
+- **크롤링**: Requests, BeautifulSoup4, Playwright (chromium)
 - **데이터베이스**: MariaDB, PostgerSQL (Ubuntu)
 - **DB 연결**: Pymysql, psycopg-binary
 - **컨테이너**: Docker Compose (Airflow)
@@ -33,7 +34,7 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 <img src="documents/images/ETL_pipeline.png">
 
 #### Extract
-
+---
 
 #### Transform
 
@@ -105,32 +106,35 @@ uhok-data/
 
 ### 테이블 정의서
 
-[AUTH_DB](documents/테이블%20정의서%20수정%20버전%20-%20AUTH_DB.pdf)
-
+[AUTH_DB](documents/Table_def_AUTH_DB.pdf) 
+[ODS_DB](documents/Table_def_ODS_DB.pdf)
+[SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)
+[REC_DB](documents/Table_def_REC_DB.pdf)
+[LOG_DB](documents/Table_def_LOG_DB.pdf)
 
 
 ### ERD
 
 #### MariaDB
-- AUTH_DB - Back-End
+- AUTH_DB - `Back-End`
 
 <img src="documents/images/auth.PNG">
 
-- ODS_DB - Data-Engineer
+- ODS_DB - `Data-Engineer`
 
 <img src="documents/images/ods.PNG">
 
-- SERVICE_DB - Data-Engineer, Back-End
+- SERVICE_DB - `Data-Engineer`, `Back-End`
 
 <img src="documents/images/service.PNG">
 
 #### PostgreSQL
 
-- REC_DB - Data-Engineer, ML-Engineer
+- REC_DB - `Data-Engineer`, `ML-Engineer`
 
 <img src="documents/images/rec.PNG">
 
-- LOG_DB - Back-End
+- LOG_DB - `Back-End`
 
 <img src="documents/images/log.PNG">
 
@@ -167,10 +171,13 @@ cp .env.example .env
 
 # ----------- MariaDB -------------- 
 MARIADB_ODS_URL="mysql+pymysql://user:password@localhost:3306/AUTH_DB"
+
 # 서비스용 DB (service_db)
 MARIADB_SERVICE_URL="mysql+asyncmy://user:password@localhost:3306/SERVICE_DB"
+
 # ----------- PostgreSQL -----------
 POSTGRES_URL="postgresql://user:password@localhost:5432/"
+
 # ----------- Airflow --------------
 AIRFLOW_UID=50000
 ```
@@ -179,7 +186,8 @@ AIRFLOW_UID=50000
 ```bash
 $ uv venv --python 3.13.5
 $ source .venv/Scripts/activate
-# requirements.txt > torch 버전지정 주석처리 이후 pip install
+
+# requirements.txt > torch cpu버전 정의 주석처리 이후 pip install
 $ uv pip install -r requirements.txt
 ```
 
