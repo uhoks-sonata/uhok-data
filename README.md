@@ -21,17 +21,26 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 ## 🏗️ 아키텍처
 
 ### 🛠 기술 스택
-- **개발 언어**
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"/>
-- **크롤링**
+- **개발 언어**\
+  <img src="https://img.shiel*ds.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"/>
+- **크롤링**\
   <img src="https://img.shields.io/badge/Requests-bada55?style=flat&logo=Python&logoColor=white"/>
   <img src="https://img.shields.io/badge/BeautifulSoup4-d97453?style=flat&logo=Python&logoColor=white"/>
   <img src="https://img.shields.io/badge/Playwright-92dc8d?style=flat&logo=Python&logoColor=white"/>
-- **데이터베이스**: MariaDB, PostgerSQL (Ubuntu)
-- **DB 연결**: Pymysql, psycopg-binary
-- **컨테이너**: Docker Compose (Airflow)
-- **임베딩**: SentenceTransformer > paraphrase-multilingual-MiniLM-L12-v2
-- **분류**: Linear SVM
+- **데이터베이스**\
+  <img src="https://img.shields.io/badge/MariaDB-92dc8d?style=flat&logo=MariaDB&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PostgerSQL-92dc8d?style=flat&logo=PostgerSQL&logoColor=white"/>
+- **DB 연결**\
+  <img src="https://img.shields.io/badge/Pymysql-92dc8d?style=flat&logo=Python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Psycopg-Binary-92dc8d?style=flat&logo=Python&logoColor=white"/>
+- **컨테이너**\
+  <img src="https://img.shields.io/badge/Docker-92dc8d?style=flat&logo=Docker&logoColor=white"/>
+- **오케스트레이션**\
+  <img src="https://img.shields.io/badge/Airflow-92dc8d?style=flat&logo=Airflow&logoColor=white"/>
+- **임베딩**\
+  <img src="https://img.shields.io/badge/SentenceTransformer-92dc8d?style=flat&logo=Python&logoColor=white"/>
+- **분류**\
+  <img src="https://img.shields.io/badge/LinearSVM-92dc8d?style=flat&logo=Python&logoColor=white"/>
 
 ## 🗜 ETL 파이프라인
 
