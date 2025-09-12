@@ -1,19 +1,28 @@
+# 로컬 uv환경 사용 시 주석 처리 --------------------------------
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.4.*
+# 로컬 uv환경 사용 시 주석 처리 --------------------------------
+
+sentence-transformers
 pandas
 numpy
-scikit-learn
+scikit-learn==1.7.1
 joblib
 tqdm
 pymysql
-psycopg2
-bs4
+psycopg2-binary
+beautifulsoup4
 lxml
 requests
 selenium
 playwright
-sentence-transformers
-xgboost
-lightgbm
-matplotlib
-seaborn
-dotenv
 pendulum
+python-dotenv
+openpyxl
+xlsxwriter
+
+apache-airflow
+apache-airflow-providers-fab
+apache-airflow-providers-postgres
+apache-airflow-providers-mysql
+apache-airflow-providers-common-sql

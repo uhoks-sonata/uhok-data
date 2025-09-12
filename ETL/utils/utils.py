@@ -2,12 +2,12 @@ import pymysql
 import psycopg2
 import sys
 import os
-from typing import Any
+from typing import Union, Dict, Any
 import re
 import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
-from urllib.parse import urlparse
+from urllib.parse import urlsplit, unquote, parse_qsl, urlparse
 
 load_dotenv()
 
@@ -17,16 +17,82 @@ def replace_nan_with_none(df: pd.DataFrame) -> pd.DataFrame:
     """
     return df.where(pd.notna(df), None)
 
-def parse_dsn(dsn):
-    """일반 DSN 문자열을 dict로 변환"""
-    url = urlparse(dsn)
-    return {
-        "user": url.username,
-        "password": url.password,
-        "host": url.hostname,
-        "port": url.port,
-        "database": url.path.lstrip("/"),
+# def parse_dsn(dsn):
+#     """일반 DSN 문자열을 dict로 변환"""
+#     url = urlparse(dsn)
+#     return {
+#         "user": url.username,
+#         "password": url.password,
+#         "host": url.hostname,
+#         "port": url.port,
+#         "database": url.path.lstrip("/"),
+#     }
+def parse_dsn(dsn: Union[str, bytes], *, default_port: int | None = None) -> Dict[str, Any]:
+    """
+    DSN(URL) 문자열을 안전하게 파싱해서 연결용 dict로 변환.
+    - bytes/str 모두 지원
+    - mysql/mariadb 기본 포트 자동 설정
+    - 퍼센트 인코딩 해제 (user / password / database)
+    - 쿼리스트링 파라미터(params) 보존
+    - unix_socket 지원 (?unix_socket=... 또는 ?socket=...)
+    - 스킴 생략한 'user:pass@host:port/db' 형태도 허용
+    """
+    if dsn is None:
+        raise ValueError("DSN is None")
+
+    if isinstance(dsn, (bytes, bytearray)):
+        dsn = dsn.decode("utf-8")  # ★ bytes 방어
+
+    if not isinstance(dsn, str):
+        raise TypeError(f"DSN must be str or bytes, got {type(dsn)!r}")
+
+    url = urlsplit(dsn)
+
+    # 스킴이 없어 netloc이 비어있고 path에 '@'가 보이면, URL 재해석 (user:pass@host:port/db)
+    if not url.netloc and url.path and "@" in url.path:
+        url = urlsplit("dummy://" + dsn)
+
+    scheme = (url.scheme or None)
+
+    username = unquote(url.username or "")
+    password = unquote(url.password or "")
+    host = url.hostname or None
+
+    # 기본 포트: mysql/mariadb면 3306, 아니면 호출자가 주는 default_port
+    port = url.port or default_port
+    if port is None and scheme:
+        if scheme.startswith(("mysql", "mariadb")):
+            port = 3306
+        elif scheme.startswith(("postgres", "pg", "postgresql")):
+            port = 5432
+
+    # DB 이름: '/db'에서 선두 '/' 제거 및 퍼센트 디코딩
+    raw_path = url.path or ""
+    database = unquote(raw_path.lstrip("/")) or None
+    if database and "/" in database:   # '/db/extra' 같은 경우 첫 세그먼트만
+        database = database.split("/", 1)[0]
+
+    # 쿼리스트링 파라미터 보존
+    params = dict(parse_qsl(url.query, keep_blank_values=True))
+    unix_socket = params.get("unix_socket") or params.get("socket")
+
+    result: Dict[str, Any] = {
+        "scheme": scheme,
+        "user": username or None,
+        "password": password or None,
+        "host": host,
+        "port": port,
+        "database": database,
+        "params": params,
     }
+    if unix_socket:
+        result["unix_socket"] = unix_socket
+
+    # 최소 필수값 체크(소켓 사용 안 하면 host 필요)
+    if not result.get("host") and not unix_socket:
+        raise ValueError("DSN must include host or unix_socket")
+
+    return result
 
 def con_to_maria_service():
     try:
