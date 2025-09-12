@@ -3,7 +3,7 @@
 U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.\
 Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 구축합니다.
 
-## 📑 수집 데이터
+## 📑 사용 데이터
 
 ### 🏪 홈쇼핑 (HomeShopping Data)
 - **상품 정보**: 홈쇼핑 상품 정보 및 썸네일 이미지 정보
@@ -28,20 +28,20 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 - **임베딩**: SentenceTransformer > paraphrase-multilingual-MiniLM-L12-v2
 - **분류**: Linear SVM
 
-### ETL 파이프라인
+## 🗜 ETL 파이프라인
 
 <img src="documents/images/ETL_pipeline.png">
 
-### Extract
---
-
-### Transform
+### 데이터 탐색
 
 
-### Load
+### 데이터 수집
 
 
-#### 폴더 구조
+### 데이터 전처리 및 임베딩
+
+
+### 폴더 구조
 ```
 uhok-data/
 ├── ETL/                                   # ETL 파이프라인 Python 패키지                   
@@ -110,29 +110,30 @@ uhok-data/
 [LOG_DB](documents/Table_def_LOG_DB.pdf)
 
 ### ERD
-
-#### MariaDB
-- AUTH_DB - `Back-End`
+- - -
+### MariaDB
+- **AUTH_DB** - `Back-End`
 
 <img src="documents/images/auth.PNG">
 
-- ODS_DB - `Data-Engineer`
+- **ODS_DB** - `Data-Engineer`
 
 <img src="documents/images/ods.PNG">
 
-- SERVICE_DB - `Data-Engineer`, `Back-End`
+- **SERVICE_DB** - `Data-Engineer`, `Back-End`
 
 <img src="documents/images/service.PNG">
 
-#### PostgreSQL
+### PostgreSQL
 
-- REC_DB - `Data-Engineer`, `ML-Engineer`
+- **REC_DB** - `Data-Engineer`, `ML-Engineer`
 
 <img src="documents/images/rec.PNG">
 
-- LOG_DB - `Back-End`
+- **LOG_DB** - `Back-End`
 
 <img src="documents/images/log.PNG">
+- - -
 
 ## 🚀 빠른 시작
 
@@ -140,7 +141,7 @@ uhok-data/
 - Python 
   + 로컬 : Python 3.13.5
   + Airflow : Python 3.12.12 (자동 설치)
-- Docker & Docker Compose
+- Docker Desktop
 - MariaDB
 - PostgreSQL (pgvector 확장)
 
@@ -205,9 +206,10 @@ $ docker compose build
 $ docker compose up -d
 ```
 
-8. **Airflow DAG Trigger**
-
-
+8. **Airflow DAG Trigger 실행**
+  + 기본 PORT : 8080
+  + 기본 ID/PW : `airflow` / `airflow`
+  + DAG > uhok_pipeline > Trigger
 
 
 
