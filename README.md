@@ -106,11 +106,11 @@ uhok-data/
 
 ### 테이블 정의서
 
-[AUTH_DB](documents/Table_def_AUTH_DB.pdf) 
-[ODS_DB](documents/Table_def_ODS_DB.pdf)
-[SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)
-[REC_DB](documents/Table_def_REC_DB.pdf)
-[LOG_DB](documents/Table_def_LOG_DB.pdf)
+[AUTH_DB](documents/Table_def_AUTH_DB.pdf) \
+[ODS_DB](documents/Table_def_ODS_DB.pdf)\
+[SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)\
+[REC_DB](documents/Table_def_REC_DB.pdf)\
+[LOG_DB](documents/Table_def_LOG_DB.pdf)\
 
 
 ### ERD
