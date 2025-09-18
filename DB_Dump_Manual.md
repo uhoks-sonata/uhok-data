@@ -139,7 +139,7 @@ ALTER USER waksae WITH SUPERUSER;
 ```
 
 ### Database 생성
-- Database 생성
+- 코드
 ```bash
 # locale 리스트 확인
 locale -a
