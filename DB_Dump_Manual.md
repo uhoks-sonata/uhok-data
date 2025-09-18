@@ -4,7 +4,7 @@
 - Ubuntu 내 Firefox로 하기 링크 접속 및 쿼리파일 다운로드
 - https://drive.google.com/drive/folders/1eryySlfNfgVuItZon25T3YqrM5_GGtAn
 
-## Ubuntu 환경 설정
+## Ubuntu 환경 설정 및 DB 구축
 
 ### 공통 선행 사항
 ```bash
