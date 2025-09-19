@@ -44,6 +44,14 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 - **오케스트레이션**\
   <img src="https://img.shields.io/badge/Airflow-59d4d8?style=flat&logo=apacheAirflow&logoColor=black"/>
 
+|개발언어|[Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white)||
+||크롤링|[Requests](https://img.shields.io/badge/Requests-bada55?style=flat&logo=Python&logoColor=white)[BS4](https://img.shields.io/badge/BeautifulSoup4-d97453?style=flat&logo=Python&logoColor=white)[Playwright](https://img.shields.io/badge/Playwright-afbb00?style=flat&logo=Python&logoColor=white)|
+||DB연결|[Pymysql](https://img.shields.io/badge/Pymysql-fc7773?style=flat&logo=Python&logoColor=white)[Psycopg](https://img.shields.io/badge/Psycopg-ef9c89?style=flat&logo=Python&logoColor=white)|
+||임베딩|[SentenceTransformer](https://img.shields.io/badge/SentenceTransformer-92dc8d?style=flat&logo=Python&logoColor=white)|
+||분류|[LinearSVM](https://img.shields.io/badge/LinearSVM-6de885?style=flat&logo=Python&logoColor=white)|
+|데이터베이스|[MariaDB](https://img.shields.io/badge/MariaDB-8db5dc?style=flat&logo=MariaDB&logoColor=black)[PostgerSQL](https://img.shields.io/badge/PostgerSQL-a9abe4?style=flat&logo=PostgreSQL&logoColor=black)|
+|컨테이너|[Docker](https://img.shields.io/badge/Docker-001b1e?style=flat&logo=Docker&logoColor=blue)|
+|오케스트레이션|[Airflow](https://img.shields.io/badge/Airflow-59d4d8?style=flat&logo=apacheAirflow&logoColor=black)|
 
 ## 🗜 ETL 파이프라인
 
