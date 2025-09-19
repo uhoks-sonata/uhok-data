@@ -1,10 +1,10 @@
 # DB Dump 사용 매뉴얼
 - DB구축은 Ubuntu 환경에서 진행할 것을 권장
-## 쿼리파일 다운로드
+## 📒 쿼리파일 다운로드
 - Ubuntu 내 Firefox로 하기 링크 접속 및 쿼리파일 다운로드
 - https://drive.google.com/drive/folders/1eryySlfNfgVuItZon25T3YqrM5_GGtAn
 
-## Ubuntu 환경 설정 및 DB 구축
+## ⚙️ Ubuntu 환경 설정 및 DB 구축
 
 ### 공통 선행 사항
 ```bash
@@ -67,7 +67,7 @@ $ sudo -u postgres psql
 ```
 
 
-## MariaDB 복구 절차
+## 💾 MariaDB 복구 절차
 - 유저 이름, 비밀번호, 호스트IP, 포트번호 모두 예시.
 
 ### USER 생성 및 권한 부여
@@ -129,7 +129,7 @@ $ mysql -h 192.168.219.124 -u waksae -p1234 --default-character-set=utf8mb4 ODS_
 $ mysql -h 192.168.219.124 -u waksae -p1234 --default-character-set=utf8mb4 SERVICE_DB < ./Desktop/service_db_dump.sql
 ```
 
-## PostgreSQL 복구 절차
+## 💾 PostgreSQL 복구 절차
 
 ### USER 생성 및 권한 부여
 ```sql
