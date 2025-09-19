@@ -197,11 +197,10 @@ uhok-data/
 [REC_DB](documents/Table_def_REC_DB.pdf)\
 [LOG_DB](documents/Table_def_LOG_DB.pdf)
 
----
 ### 🖇️ ERD
 - **AUTH_DB** - `MariaDB`
 
-<img src="documents/images/auth.PNG">
+<img src="documents/images/auth.PNG" width="50">
 
 - **ODS_DB** - `MariaDB`
 
