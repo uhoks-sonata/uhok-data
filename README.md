@@ -277,7 +277,7 @@
   ### ----------- Airflow --------------
   AIRFLOW_UID=50000
   ```
-  **5. 로컬 가상환경 설정**
+  **5. 로컬 가상환경 설정** (로컬테스트 진행 시)
   ```bash
   $ uv venv --python 3.13.5
   $ source .venv/Scripts/activate
