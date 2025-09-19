@@ -5,44 +5,22 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 
 ## 📑 사용 데이터
 
-### 🏪 홈쇼핑 (HomeShopping Data)
+### 🏪 홈쇼핑
 - **상품 정보**: 홈쇼핑 상품 정보 및 썸네일 이미지 정보
 - **편성표 정보**: 채널별 편성표 정보
 - **상품 상세**: 상품정보제공 고시, 상세 이미지
 - **라이브 스트리밍**: 실시간 방송 플레이어 URL
 
-### 🛍️ U+ 콕 (KOK Data)
+### 🛍️ U+콕
 - **가격 정보**: 상품별 가격 정보
 - **상품 상세**: 상품정보제공 고시, 리뷰 정보, 판매자 정보
 
-### 🍳 레시피 (Recipe Data)
+### 🍳 레시피
 - **레시피 정보**: 만개의 레시피 무료 데이터
 
 ## 🏗️ 아키텍처
 
 ### 🛠 기술 스택
-- **개발 언어**\
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white"/>
-  - 크롤링\
-    <img src="https://img.shields.io/badge/Requests-bada55?style=flat&logo=Python&logoColor=white"/>
-    <img src="https://img.shields.io/badge/BeautifulSoup4-d97453?style=flat&logo=Python&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Playwright-afbb00?style=flat&logo=Python&logoColor=white"/>
-  - DB 연결\
-    <img src="https://img.shields.io/badge/Pymysql-fc7773?style=flat&logo=Python&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Psycopg-ef9c89?style=flat&logo=Python&logoColor=white"/>
-  - 임베딩\
-    <img src="https://img.shields.io/badge/SentenceTransformer-92dc8d?style=flat&logo=Python&logoColor=white"/>
-  - 분류\
-    <img src="https://img.shields.io/badge/LinearSVM-6de885?style=flat&logo=Python&logoColor=white"/>
-
-- **데이터베이스**\
-  <img src="https://img.shields.io/badge/MariaDB-8db5dc?style=flat&logo=MariaDB&logoColor=black"/>
-  <img src="https://img.shields.io/badge/PostgerSQL-a9abe4?style=flat&logo=PostgreSQL&logoColor=black"/>
-
-- **컨테이너**\
-  <img src="https://img.shields.io/badge/Docker-001b1e?style=flat&logo=Docker&logoColor=blue"/>
-- **오케스트레이션**\
-  <img src="https://img.shields.io/badge/Airflow-59d4d8?style=flat&logo=apacheAirflow&logoColor=black"/>
 
 | 구분 | 기술 |
 |---|---|
@@ -62,7 +40,6 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 #### 쇼핑몰
 - **U+콕**
   + Playwright와 CSS 선택자를 사용해 데이터 수집 진행
-
   + A. 식품 카테고리 내 제품 리스트 수집
     - 제품코드
     - 할인가
@@ -80,11 +57,8 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
     - 모델 학습을 위해 기존 수집 데이터 보존
 - **홈앤쇼핑**
   + Playwright와 CSS 선택자를 사용해 데이터 수집 진행
-  + 
-
 - **현대홈쇼핑 (2개 채널)**
   + Playwright와 CSS 선택자, Requests와 JSON 데이터를 사용해 데이터 수집 진행
-
 - **NS홈쇼핑 (2개 채널)**
   + Playwright와 CSS 선택자, Requests와 JSON 데이터를 사용해 데이터 수집 진행
   + 제품 상세 정보 로딩 시 데이터 부재로 해당 제품 관련 상세 정보 일부 파싱 불가 
