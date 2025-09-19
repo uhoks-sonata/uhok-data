@@ -305,10 +305,11 @@
   $ docker compose up -d
   ```
   **8. Airflow DAG Trigger 실행**
-    + 기본 PORT : 8080
-    + 기본 ID/PW : `airflow` / `airflow`
-    + DAG > uhok_pipeline > Trigger
-
+  ```
+  기본 PORT : 8080
+  기본 ID/PW : airflow / airflow
+  DAG > uhok_pipeline > Trigger
+  ```
 
 ---
 
