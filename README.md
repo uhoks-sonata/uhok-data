@@ -44,9 +44,9 @@ Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라�
 - **오케스트레이션**\
   <img src="https://img.shields.io/badge/Airflow-59d4d8?style=flat&logo=apacheAirflow&logoColor=black"/>
 
-
-| 개발언어 | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white) |
+| 구분 | 기술 |
 |---|---|
+| 개발언어 | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=Python&logoColor=white) |
 | 데이터베이스 | ![MariaDB](https://img.shields.io/badge/MariaDB-8db5dc?style=flat&logo=MariaDB&logoColor=black) ![PostgerSQL](https://img.shields.io/badge/PostgerSQL-a9abe4?style=flat&logo=PostgreSQL&logoColor=black) |
 | 컨테이너 | ![Docker](https://img.shields.io/badge/Docker-001b1e?style=flat&logo=Docker&logoColor=blue) |
 | 오케스트레이션 | ![Airflow](https://img.shields.io/badge/Airflow-59d4d8?style=flat&logo=apacheAirflow&logoColor=black) |
