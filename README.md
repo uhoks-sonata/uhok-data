@@ -229,7 +229,6 @@
   **1. 저장소 클론**
   ```bash
   git clone <repository-url>
-  cd uhok-data
   ```
   **2. 로컬 DB 구축**
   - Ubuntu 환경 DB 구축은 [DB_Dump_Manual](./DB_Dump_Manual.md) 참고
@@ -256,8 +255,10 @@
   ```
   - `PostgreSQL`
   ```sql
+  -- 생성예시
   CREATE USER user WITH PASSWORD 'password';
 
+  -- 권한부여
   ALTER USER user WITH SUPERUSER;
   ```
   **4. 환경 변수 설정**
