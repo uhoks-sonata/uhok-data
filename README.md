@@ -200,7 +200,7 @@ uhok-data/
 ### 🖇️ ERD
 - **AUTH_DB** - `MariaDB`
 
-<img src="documents/images/auth.PNG" width="50">
+<img src="documents/images/auth.PNG" width="250">
 
 - **ODS_DB** - `MariaDB`
 
@@ -212,11 +212,11 @@ uhok-data/
 
 - **REC_DB** - `PostgreSQL`
 
-<img src="documents/images/rec.PNG">
+<img src="documents/images/rec.PNG" width="125">
 
 - **LOG_DB** - `PostgreSQL`
 
-<img src="documents/images/log.PNG">
+<img src="documents/images/log.PNG" width="250">
 
 ---
 
