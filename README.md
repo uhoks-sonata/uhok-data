@@ -1,7 +1,8 @@
 # UHOK Data
-
-U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.\
-Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 구축합니다.
+- 레포지토리 관리 담당자 : 장윤수
+- 개요
+    U+콕&홈쇼핑 기반 사용자 맞춤 식재료 및 레시피 추천 서비스입니다.\
+    Airflow 기반의 홈쇼핑, 쇼핑몰의 실시간 데이터 ETL 파이프라인을 구축합니다.
 
 ## 📑 사용 데이터
 
@@ -237,22 +238,22 @@ uhok-data/
 git clone <repository-url>
 cd uhok-data
 ```
-
 **2. 로컬 DB 구축**
+- Ubuntu 환경 DB 구축은 `DB_Dump_Manual.md` 참고
   + MariaDB
   ```sql
-  CREATE DATABASE ODS_DB
-  CREATE DATABASE SERVICE_DB
+  CREATE DATABASE ODS_DB;
+  CREATE DATABASE SERVICE_DB;
   ```
 
   + PostgreSQL
   ```sql
   -- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
 
-  CREATE DATABASE "REC_DB"
+  CREATE DATABASE "REC_DB";
   ```
-
 **3. 유저 생성 및 권한 부여**
+- `MariaDB`
 ```sql
 -- 생성예시
 CREATE USER 'user'@'%' IDENTIFIED BY 'password';
@@ -260,8 +261,12 @@ CREATE USER 'user'@'%' IDENTIFIED BY 'password';
 -- 권한부여
 GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
 ```
+- `PostgreSQL`
+```sql
+CREATE USER user WITH PASSWORD 'password';
 
-
+ALTER USER user WITH SUPERUSER;
+```
 **4. 환경 변수 설정**
 ```bash
 ### .env 파일 생성
@@ -279,7 +284,6 @@ POSTGRES_URL="postgresql://user:password@localhost:5432/"
 ### ----------- Airflow --------------
 AIRFLOW_UID=50000
 ```
-
 **5. 로컬 가상환경 설정**
 ```bash
 $ uv venv --python 3.13.5
@@ -290,36 +294,21 @@ $ uv pip install -r requirements.txt
 
 ### uv python 라이브러리 설치 이후 url, torch 부분 주석 해제
 ```
-
-
 **6. 레시피 데이터 ETL 로직 실행**
 ```bash
 ### 레시피 데이터 ETL 최초 1회 실행
 $ python -m ETL.insert_recipe
 ```
-
 **7. 도커 빌드 & 업**
 ```bash
 $ docker compose build
 $ docker compose up -d
 ```
-
 **8. Airflow DAG Trigger 실행**
   + 기본 PORT : 8080
   + 기본 ID/PW : `airflow` / `airflow`
   + DAG > uhok_pipeline > Trigger
 
-
-
-## 🤝 기여하기
-
-### 개발 워크플로우
-
-
-
-## 문서
-### ERD
-### 
 
 ---
 
