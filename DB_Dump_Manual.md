@@ -67,7 +67,7 @@ $ sudo -u postgres psql
 ```
 
 
-## 💾 MariaDB 복구 절차
+## 🦭 MariaDB 복구 절차
 - 유저 이름, 비밀번호, 호스트IP, 포트번호 모두 예시.
 
 ### USER 생성 및 권한 부여
@@ -129,7 +129,7 @@ $ mysql -h 192.168.219.124 -u waksae -p1234 --default-character-set=utf8mb4 ODS_
 $ mysql -h 192.168.219.124 -u waksae -p1234 --default-character-set=utf8mb4 SERVICE_DB < ./Desktop/service_db_dump.sql
 ```
 
-## 💾 PostgreSQL 복구 절차
+## 🐘 PostgreSQL 복구 절차
 
 ### USER 생성 및 권한 부여
 ```sql
