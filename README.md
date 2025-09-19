@@ -98,126 +98,126 @@
   + 중복 수집된 이미지 URL 삭제 (서로 다른 확장자)
 ### 📈 데이터 임베딩
 - 전처리 이후 하기 데이터에 대한 임베딩 값 생성 및 적재 (384차원)
-- `SERVICE_DB` > `FCT_RECIPE` > `COOKING_NAME`
-- `SERVICE_DB` > `FCT_MTRL` > `MATERIAL_NAME` (DISTINCT 적용)
-- `SERVICE_DB` > `FCT_KOK_PRODUCT_INFO` > `KOK_PRODUCT_NAME`
-- `SERVICE_DB` > `FCT_HOMESHOPPING_LIST` > `PRODUCT_NAME` (DISTINCT 적용)
+  + `SERVICE_DB` > `FCT_RECIPE` > `COOKING_NAME`
+  + `SERVICE_DB` > `FCT_MTRL` > `MATERIAL_NAME` (DISTINCT 적용)
+  + `SERVICE_DB` > `FCT_KOK_PRODUCT_INFO` > `KOK_PRODUCT_NAME`
+  + `SERVICE_DB` > `FCT_HOMESHOPPING_LIST` > `PRODUCT_NAME` (DISTINCT 적용)
 ### 🔖 제품군 분류
 - 전처리 이후 `FCT_TABLE`로 부터 제품명 데이터 추출
 - 홈쇼핑 데이터 : 식품/비식품 분류 이후 식재료/완제품 분류
 - 쇼핑몰 데이터 : 식재료/완제품 분류 (식품 카테고리의 제품 데이터만을 수집)
 - 서비스 모니터링을 통한 데이터 드리프트 관리\
-  a. 추천, 라이브 편성 모니터링\
-  b. 식품/비식품 분류 오류, 식재료/완제품 분류 오류 발견\
-  c. 쿼리 실행을 통한 데이터 변경\
-  d. 사전 내 필터 단어 추가\
-  e. 재학습
+    a. 추천, 라이브 편성 모니터링\
+    b. 식품/비식품 분류 오류, 식재료/완제품 분류 오류 발견\
+    c. 쿼리 실행을 통한 데이터 변경\
+    d. 사전 내 필터 단어 추가\
+    e. 재학습
 
 ### 📆 DAG
-```
-             크롤링
-U+콕   홈앤쇼핑   현대홈쇼핑   NS홈쇼핑 
- └────────┴────┬────┴──────────┘
-               │    
-             전처리
-         U+콕     홈쇼핑
-          └────┬────┘
-               │
-             임베딩
-         U+콕     홈쇼핑
-          └────┬────┘
-               │
-              분류
-         U+콕     홈쇼핑 
-```
+  ```
+              크롤링
+  U+콕   홈앤쇼핑   현대홈쇼핑   NS홈쇼핑 
+  └────────┴────┬────┴──────────┘
+                │    
+              전처리
+          U+콕     홈쇼핑
+            └────┬────┘
+                │
+              임베딩
+          U+콕     홈쇼핑
+            └────┬────┘
+                │
+                분류
+          U+콕     홈쇼핑 
+  ```
 ### 📂 폴더 구조
-```
-uhok-data/
-├── ETL/                                   # ETL 파이프라인 Python 패키지                   
-│   ├── __init__.py 
-│   │                              
-│   ├── data/                              # 데이터 디렉토리
-│   │   └── TB_RECIPE_SEARCH_241226.csv    # 만개의 레시피 무료 데이터
-│   │
-│   ├── ingestion/                         # 데이터 추출 디렉토리
-│   │   ├── __init__.py
-│   │   ├── crawl_homeshop.py              # 홈쇼핑 데이터 크롤링 로직
-│   │   └── crawl_kok.py                   # 콕 데이터 크롤링 로직
-│   │
-│   ├── preprocessing/                     # 전처리 디렉토리
-│   │   ├── __init__.py
-│   │   ├── preprocessing_hs.py            # 홈쇼핑 데이터 전처리 로직
-│   │   └── preprocessing_kok.py           # 콕 데이터 전처리 로직
-│   │
-│   ├── embedding/                         # 임베딩 디렉토리
-│   │   ├── __init__.py
-│   │   └── embedding.py                   # 임베딩 생성 로직
-│   │
-│   ├── classifying/                       # 분류 디렉토리
-│   │   ├── __init__.py
-│   │   │
-│   │   ├── artifacts/                     # 분류 모델 저장 디렉토리
-│   │   │   ├── finished_vs_ingredient_linear_svc.joblib
-│   │   │   ├── ing_labeled
-│   │   │   ├── keyword_meta.json
-│   │   │   ├── kok_finished_vs_ingredient.joblib
-│   │   │   ├── linear_svm_calibrated.pkl
-│   │   │   ├── tfidf_char.pkl
-│   │   │   └── tfidf_word.pkl
-│   │   │
-│   │   ├── fct_to_cls.py                  # FCT_TABLE -> CLS_TABLE
-│   │   ├── predict_hs.py                  # 홈쇼핑 상품 분류 로직
-│   │   ├── predict_kok.py                 # 콕 상품 분류 로직
-│   │   ├── predict_main.py                # 분류 통합 로직
-│   │   ├── train_cls_hs_food_model.py     # 홈쇼핑 상품 식품 판별 로직
-│   │   ├── train_cls_hs_ingr_model.py     # 홈쇼핑 상품 식재료 판별 로직
-│   │   ├── train_cls_kok_model.py         # 콕 상품 식재료 판별 로직
-│   │   └── train_main.py                  # 모델 훈련 통합 로직
-│   │ 
-│   ├── utils/                             # 유틸 디렉토리
-│   │   ├── __init__.py
-│   │   └── utils.py                       # 공통 유틸 함수
-│   │ 
-│   ├── insert_recipe.py                   # 레시피 데이터 ETL 파이프라인
-│   └── main.py                            # 외부 데이터 ETL 함수
-│
-├── dags/
-│   └── etl_dag.py                         # DAG 정의
-│
-├── docker-compose.yaml            
-├── Dockerfile                     
-└── requirements.txt
-```
+  ```
+  uhok-data/
+  ├── ETL/                                   # ETL 파이프라인 Python 패키지                   
+  │   ├── __init__.py 
+  │   │                              
+  │   ├── data/                              # 데이터 디렉토리
+  │   │   └── TB_RECIPE_SEARCH_241226.csv    # 만개의 레시피 무료 데이터
+  │   │
+  │   ├── ingestion/                         # 데이터 추출 디렉토리
+  │   │   ├── __init__.py
+  │   │   ├── crawl_homeshop.py              # 홈쇼핑 데이터 크롤링 로직
+  │   │   └── crawl_kok.py                   # 콕 데이터 크롤링 로직
+  │   │
+  │   ├── preprocessing/                     # 전처리 디렉토리
+  │   │   ├── __init__.py
+  │   │   ├── preprocessing_hs.py            # 홈쇼핑 데이터 전처리 로직
+  │   │   └── preprocessing_kok.py           # 콕 데이터 전처리 로직
+  │   │
+  │   ├── embedding/                         # 임베딩 디렉토리
+  │   │   ├── __init__.py
+  │   │   └── embedding.py                   # 임베딩 생성 로직
+  │   │
+  │   ├── classifying/                       # 분류 디렉토리
+  │   │   ├── __init__.py
+  │   │   │
+  │   │   ├── artifacts/                     # 분류 모델 저장 디렉토리
+  │   │   │   ├── finished_vs_ingredient_linear_svc.joblib
+  │   │   │   ├── ing_labeled
+  │   │   │   ├── keyword_meta.json
+  │   │   │   ├── kok_finished_vs_ingredient.joblib
+  │   │   │   ├── linear_svm_calibrated.pkl
+  │   │   │   ├── tfidf_char.pkl
+  │   │   │   └── tfidf_word.pkl
+  │   │   │
+  │   │   ├── fct_to_cls.py                  # FCT_TABLE -> CLS_TABLE
+  │   │   ├── predict_hs.py                  # 홈쇼핑 상품 분류 로직
+  │   │   ├── predict_kok.py                 # 콕 상품 분류 로직
+  │   │   ├── predict_main.py                # 분류 통합 로직
+  │   │   ├── train_cls_hs_food_model.py     # 홈쇼핑 상품 식품 판별 로직
+  │   │   ├── train_cls_hs_ingr_model.py     # 홈쇼핑 상품 식재료 판별 로직
+  │   │   ├── train_cls_kok_model.py         # 콕 상품 식재료 판별 로직
+  │   │   └── train_main.py                  # 모델 훈련 통합 로직
+  │   │ 
+  │   ├── utils/                             # 유틸 디렉토리
+  │   │   ├── __init__.py
+  │   │   └── utils.py                       # 공통 유틸 함수
+  │   │ 
+  │   ├── insert_recipe.py                   # 레시피 데이터 ETL 파이프라인
+  │   └── main.py                            # 외부 데이터 ETL 함수
+  │
+  ├── dags/
+  │   └── etl_dag.py                         # DAG 정의
+  │
+  ├── docker-compose.yaml            
+  ├── Dockerfile                     
+  └── requirements.txt
+  ```
 ## 📖 데이터 정의
 
 ### 🪧 테이블 정의서
 
-[AUTH_DB](documents/Table_def_AUTH_DB.pdf) \
-[ODS_DB](documents/Table_def_ODS_DB.pdf)\
-[SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)\
-[REC_DB](documents/Table_def_REC_DB.pdf)\
-[LOG_DB](documents/Table_def_LOG_DB.pdf)
+  [AUTH_DB](documents/Table_def_AUTH_DB.pdf) \
+  [ODS_DB](documents/Table_def_ODS_DB.pdf)\
+  [SERVICE_DB](documents/Table_def_SERVICE_DB.pdf)\
+  [REC_DB](documents/Table_def_REC_DB.pdf)\
+  [LOG_DB](documents/Table_def_LOG_DB.pdf)
 
-### 🖇️ ERD
-- **AUTH_DB** - `MariaDB`
+  ### 🖇️ ERD
+  - **AUTH_DB** - `MariaDB`
 
-<img src="documents/images/auth.PNG" width="250">
+  <img src="documents/images/auth.PNG" width="250">
 
-- **ODS_DB** - `MariaDB`
+  - **ODS_DB** - `MariaDB`
 
-<img src="documents/images/ods.PNG">
+  <img src="documents/images/ods.PNG">
 
-- **SERVICE_DB** - `MariaDB`
+  - **SERVICE_DB** - `MariaDB`
 
-<img src="documents/images/service.PNG">
+  <img src="documents/images/service.PNG">
 
-- **REC_DB** - `PostgreSQL`
+  - **REC_DB** - `PostgreSQL`
 
-<img src="documents/images/rec.PNG" width="125">
+  <img src="documents/images/rec.PNG" width="125">
 
-- **LOG_DB** - `PostgreSQL`
+  - **LOG_DB** - `PostgreSQL`
 
-<img src="documents/images/log.PNG" width="250">
+  <img src="documents/images/log.PNG" width="250">
 
 ---
 
@@ -233,81 +233,81 @@ uhok-data/
 
 ### ⚙️ 환경 설정
 
-**1. 저장소 클론**
-```bash
-git clone <repository-url>
-cd uhok-data
-```
-**2. 로컬 DB 구축**
-- Ubuntu 환경 DB 구축은 [DB_Dump_Manual](./DB_Dump_Manual.md) 참고
-- MariaDB
-```sql
-CREATE DATABASE ODS_DB;
-CREATE DATABASE SERVICE_DB;
-```
+  **1. 저장소 클론**
+  ```bash
+  git clone <repository-url>
+  cd uhok-data
+  ```
+  **2. 로컬 DB 구축**
+  - Ubuntu 환경 DB 구축은 [DB_Dump_Manual](./DB_Dump_Manual.md) 참고
+  - MariaDB
+  ```sql
+  CREATE DATABASE ODS_DB;
+  CREATE DATABASE SERVICE_DB;
+  ```
 
-- PostgreSQL
-```sql
--- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
+  - PostgreSQL
+  ```sql
+  -- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
 
-CREATE DATABASE "REC_DB";
-```
-**3. 유저 생성 및 권한 부여**
-- `MariaDB`
-```sql
--- 생성예시
-CREATE USER 'user'@'%' IDENTIFIED BY 'password';
+  CREATE DATABASE "REC_DB";
+  ```
+  **3. 유저 생성 및 권한 부여**
+  - `MariaDB`
+  ```sql
+  -- 생성예시
+  CREATE USER 'user'@'%' IDENTIFIED BY 'password';
 
--- 권한부여
-GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
-```
-- `PostgreSQL`
-```sql
-CREATE USER user WITH PASSWORD 'password';
+  -- 권한부여
+  GRANT ALL PRIVILEGES ON *.* TO 'user'@'%';
+  ```
+  - `PostgreSQL`
+  ```sql
+  CREATE USER user WITH PASSWORD 'password';
 
-ALTER USER user WITH SUPERUSER;
-```
-**4. 환경 변수 설정**
-```bash
-### .env 파일 생성
-cp .env.example .env
+  ALTER USER user WITH SUPERUSER;
+  ```
+  **4. 환경 변수 설정**
+  ```bash
+  ### .env 파일 생성
+  cp .env.example .env
 
-### ----------- MariaDB -------------- 
-MARIADB_ODS_URL="mysql+pymysql://user:password@localhost:3306/AUTH_DB"
+  ### ----------- MariaDB -------------- 
+  MARIADB_ODS_URL="mysql+pymysql://user:password@localhost:3306/AUTH_DB"
 
-### 서비스용 DB (service_db)
-MARIADB_SERVICE_URL="mysql+asyncmy://user:password@localhost:3306/SERVICE_DB"
+  ### 서비스용 DB (service_db)
+  MARIADB_SERVICE_URL="mysql+asyncmy://user:password@localhost:3306/SERVICE_DB"
 
-### ----------- PostgreSQL -----------
-POSTGRES_URL="postgresql://user:password@localhost:5432/"
+  ### ----------- PostgreSQL -----------
+  POSTGRES_URL="postgresql://user:password@localhost:5432/"
 
-### ----------- Airflow --------------
-AIRFLOW_UID=50000
-```
-**5. 로컬 가상환경 설정**
-```bash
-$ uv venv --python 3.13.5
-$ source .venv/Scripts/activate
+  ### ----------- Airflow --------------
+  AIRFLOW_UID=50000
+  ```
+  **5. 로컬 가상환경 설정**
+  ```bash
+  $ uv venv --python 3.13.5
+  $ source .venv/Scripts/activate
 
-### requirements.txt > torch cpu버전 정의 주석처리 이후 pip install
-$ uv pip install -r requirements.txt
+  ### requirements.txt > torch cpu버전 정의 주석처리 이후 pip install
+  $ uv pip install -r requirements.txt
 
-### uv python 라이브러리 설치 이후 url, torch 부분 주석 해제
-```
-**6. 레시피 데이터 ETL 로직 실행**
-```bash
-### 레시피 데이터 ETL 최초 1회 실행
-$ python -m ETL.insert_recipe
-```
-**7. 도커 빌드 & 업**
-```bash
-$ docker compose build
-$ docker compose up -d
-```
-**8. Airflow DAG Trigger 실행**
-  + 기본 PORT : 8080
-  + 기본 ID/PW : `airflow` / `airflow`
-  + DAG > uhok_pipeline > Trigger
+  ### uv python 라이브러리 설치 이후 url, torch 부분 주석 해제
+  ```
+  **6. 레시피 데이터 ETL 로직 실행**
+  ```bash
+  ### 레시피 데이터 ETL 최초 1회 실행
+  $ python -m ETL.insert_recipe
+  ```
+  **7. 도커 빌드 & 업**
+  ```bash
+  $ docker compose build
+  $ docker compose up -d
+  ```
+  **8. Airflow DAG Trigger 실행**
+    + 기본 PORT : 8080
+    + 기본 ID/PW : `airflow` / `airflow`
+    + DAG > uhok_pipeline > Trigger
 
 
 ---
