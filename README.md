@@ -35,10 +35,10 @@
 <img src="documents/images/ETL_pipeline.png">
 
 ### 📋 데이터 수집
-- **공통사항**
-  + `ODS_DB` 내 적재
-  + DAG의 크롤링 단계 수행시간 단축을 위해 이미 수집된 제품 상세 정보 데이터 제외 후 수집
-  + 원활한 서비스 운영을 위해 제품 상세 정보 미수집 제품 관련 정보 전체 삭제 및 재수집 반복
+#### 공통사항
+- `ODS_DB` 내 적재
+- DAG의 크롤링 단계 수행시간 단축을 위해 이미 수집된 제품 상세 정보 데이터 제외 후 수집
+- 원활한 서비스 운영을 위해 제품 상세 정보 미수집 제품 관련 정보 전체 삭제 및 재수집 반복
 #### 레시피
 - **만개의 레시피** (최초 1회)
   + csv파일 전체 적재
@@ -239,19 +239,19 @@ git clone <repository-url>
 cd uhok-data
 ```
 **2. 로컬 DB 구축**
-- Ubuntu 환경 DB 구축은 `DB_Dump_Manual.md` 참고
-  + MariaDB
-  ```sql
-  CREATE DATABASE ODS_DB;
-  CREATE DATABASE SERVICE_DB;
-  ```
+- Ubuntu 환경 DB 구축은 [DB_Dump_Manual](./DB_Dump_Manual.md) 참고
+- MariaDB
+```sql
+CREATE DATABASE ODS_DB;
+CREATE DATABASE SERVICE_DB;
+```
 
-  + PostgreSQL
-  ```sql
-  -- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
+- PostgreSQL
+```sql
+-- PostgreSQL은 대문자를 쌍따옴표 안에 넣어야 인식
 
-  CREATE DATABASE "REC_DB";
-  ```
+CREATE DATABASE "REC_DB";
+```
 **3. 유저 생성 및 권한 부여**
 - `MariaDB`
 ```sql
